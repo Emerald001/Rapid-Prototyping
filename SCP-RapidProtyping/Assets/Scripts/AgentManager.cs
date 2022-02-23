@@ -16,9 +16,9 @@ public class AgentManager : MonoBehaviour
 
     void Start() {
         for (int i = 0; i < spawnAmount; i++) {
-            var pos = RandomNavmeshLocation(spawnRadius);
+            var pos = RandomNavmeshLocation(this.transform.position, spawnRadius);
             while(pos == Vector3.zero) {
-                pos = RandomNavmeshLocation(spawnRadius);
+                pos = RandomNavmeshLocation(this.transform.position, spawnRadius);
             }
             var tmp = Instantiate(agent, pos, Quaternion.identity);
             Crowd.Add(tmp);
@@ -29,14 +29,18 @@ public class AgentManager : MonoBehaviour
     }
 
     private void Update() {
-        foreach(GameObject dude in Crowd) {
+        foreach (GameObject dude in Crowd) {
             dude.GetComponent<Agent>().OnUpdate();
+        }
+
+        foreach (GameObject dude in DeadCrowd) {
+            dude.GetComponent<Agent>().OnKilledUpdate();
         }
     }
 
-    public Vector3 RandomNavmeshLocation(float radius) {
+    public Vector3 RandomNavmeshLocation(Vector3 pos, float radius) {
         Vector3 randomDirection = Random.insideUnitSphere * radius;
-        randomDirection += transform.position;
+        randomDirection += pos;
         NavMeshHit hit;
         Vector3 finalPosition = Vector3.zero;
         if (NavMesh.SamplePosition(randomDirection, out hit, radius, 1)) {
@@ -45,20 +49,10 @@ public class AgentManager : MonoBehaviour
         return finalPosition;
     }
 
-    public GameObject GetCloseEnemy(GameObject currentObject, float range) {
-        GameObject tmp = null;
+    public Collider[] GetCloseEnemies(GameObject currentObject, float range) {
         Collider[] hitColliders = Physics.OverlapSphere(currentObject.transform.position, range);
 
-        if (hitColliders.Length > 0) 
-            tmp = hitColliders[Random.Range(0, hitColliders.Length)].gameObject;
-
-        if (tmp != null) {
-            if (!DeadCrowd.Contains(tmp) && tmp != currentObject) {
-                return tmp;
-            }
-        }
-
-        return null;
+        return hitColliders;
     }
 
     public void KillDude(GameObject dude) {

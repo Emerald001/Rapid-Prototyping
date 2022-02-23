@@ -12,5 +12,9 @@ public class GameManager : MonoBehaviour
 
     public AgentManager agentManager;
     public Parasite parasite;
-    public CameraMovement camera;
+    public Camera camera;
+
+    private IEnumerator EndGame() {
+        yield return new WaitForSeconds(10f);
+    }
 }

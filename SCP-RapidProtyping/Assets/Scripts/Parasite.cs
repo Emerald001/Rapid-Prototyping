@@ -8,7 +8,7 @@ public class Parasite : MonoBehaviour
     public Color CurrentHostMaterial;
     public Color DeadHostMaterial;
 
-    private GameObject currentHost;
+    public GameObject currentHost;
     private GameObject previousHost;
     private AgentManager AgentManager;
 
@@ -34,15 +34,20 @@ public class Parasite : MonoBehaviour
     }
 
     private void GetNewHost() {
-        var agent = AgentManager.GetCloseEnemy(currentHost, range);
+        var dudesInRange = AgentManager.GetCloseEnemies(currentHost, range);
+        GameObject tmp = null;
 
-        if(agent == null) 
+        if (dudesInRange.Length > 0) {
+            tmp = dudesInRange[Random.Range(0, dudesInRange.Length)].gameObject;
+        }
+
+        if (AgentManager.DeadCrowd.Contains(tmp) || tmp == null || tmp == currentHost || !tmp.CompareTag("Human")) 
             return;
 
         previousHost = currentHost;
         StartCoroutine(KillDude(previousHost));
 
-        currentHost = agent;
+        currentHost = tmp;
         ChangeMaterial(currentHost, CurrentHostMaterial);
 
         timeSinceSwitch = 0;
