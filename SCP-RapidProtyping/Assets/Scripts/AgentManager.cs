@@ -57,6 +57,7 @@ public class AgentManager : MonoBehaviour
 
     public void KillDude(GameObject dude) {
         Crowd.Remove(dude);
+        GameManager.instance.values.cDeadAmount++;
         DeadCrowd.Add(dude);
     }
 }

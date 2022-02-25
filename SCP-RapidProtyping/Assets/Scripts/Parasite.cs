@@ -21,7 +21,7 @@ public class Parasite : MonoBehaviour
         AgentManager = GameManager.instance.agentManager;
     }
 
-    void Update() {
+    private void Update() {
         if (currentHost == null) {
             currentHost = AgentManager.Crowd[Random.Range(0, AgentManager.Crowd.Count - 1)];
             ChangeMaterial(currentHost, CurrentHostMaterial);

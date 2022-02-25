@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
 
     public AgentManager agentManager;
     public Parasite parasite;
+    public Values values;
     public Camera camera;
 
     private IEnumerator EndGame() {
