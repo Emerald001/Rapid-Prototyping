@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -7,15 +5,18 @@ using UnityEngine.AI;
 public class AgentManager : MonoBehaviour
 {
     public GameObject agent;
+    public GameObject investigator;
 
-    public int spawnAmount;
+    public int cSpawnAmount;
+    public int aSpawnAmount;
     public int spawnRadius;
 
+    public List<GameObject> Investigators = new List<GameObject>();
     public List<GameObject> Crowd = new List<GameObject>();
     public List<GameObject> DeadCrowd = new List<GameObject>();
 
     void Start() {
-        for (int i = 0; i < spawnAmount; i++) {
+        for (int i = 0; i < cSpawnAmount; i++) {
             var pos = RandomNavmeshLocation(this.transform.position, spawnRadius);
             while(pos == Vector3.zero) {
                 pos = RandomNavmeshLocation(this.transform.position, spawnRadius);
@@ -24,6 +25,17 @@ public class AgentManager : MonoBehaviour
             Crowd.Add(tmp);
             tmp.transform.parent = this.transform;
             tmp.GetComponent<Agent>().lookAroundRange = Random.Range(1, 10);
+            tmp.GetComponent<Agent>().OnStart();
+        }
+
+        for (int i = 0; i < aSpawnAmount; i++) {
+            var pos = RandomNavmeshLocation(this.transform.position, spawnRadius);
+            while (pos == Vector3.zero) {
+                pos = RandomNavmeshLocation(this.transform.position, spawnRadius);
+            }
+            var tmp = Instantiate(investigator, pos, Quaternion.identity);
+            Investigators.Add(tmp);
+            tmp.transform.parent = this.transform;
             tmp.GetComponent<Agent>().OnStart();
         }
     }

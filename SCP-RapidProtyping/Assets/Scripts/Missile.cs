@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Missile : MonoBehaviour
@@ -23,8 +21,10 @@ public class Missile : MonoBehaviour
                     if (dude.gameObject == GameManager.instance.parasite.currentHost)
                         Destroy(GameManager.instance.parasite.gameObject);
 
-                    if(agent.Crowd.Contains(dude.gameObject))
+                    if (agent.Crowd.Contains(dude.gameObject)) {
                         agent.Crowd.Remove(dude.gameObject);
+                        GameManager.instance.values.cDeadAmount++;
+                    }
                     else if (agent.DeadCrowd.Contains(dude.gameObject)) 
                         agent.DeadCrowd.Remove(dude.gameObject);
 

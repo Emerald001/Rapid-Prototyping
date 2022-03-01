@@ -8,7 +8,7 @@ public class Agent : MonoBehaviour
     public AgentManager AgentManager;
 
     public float lookAroundRange;
-    private NavMeshAgent agent;
+    public NavMeshAgent agent;
 
     public float TimeToDespawn;
     private float TimeSinceDeath;
@@ -17,11 +17,13 @@ public class Agent : MonoBehaviour
         AgentManager = GameManager.instance.agentManager;
 
         agent = this.GetComponent<NavMeshAgent>();
-        var pos = AgentManager.RandomNavmeshLocation(this.transform.position, lookAroundRange);
-        while (pos == Vector3.zero) {
-            pos = AgentManager.RandomNavmeshLocation(this.transform.position, lookAroundRange);
+        if(lookAroundRange != 0) {
+            var pos = AgentManager.RandomNavmeshLocation(this.transform.position, lookAroundRange);
+            while (pos == Vector3.zero) {
+                pos = AgentManager.RandomNavmeshLocation(this.transform.position, lookAroundRange);
+            }
+            agent.SetDestination(pos);
         }
-        agent.SetDestination(pos);
     }
 
     public void OnUpdate() {

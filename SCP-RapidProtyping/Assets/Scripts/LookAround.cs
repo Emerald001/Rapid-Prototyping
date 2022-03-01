@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class LookAround : MonoBehaviour
@@ -12,10 +14,10 @@ public class LookAround : MonoBehaviour
 	private float yRotation = 0f;
 
     private void Start() {
-		Cursor.lockState = CursorLockMode.Locked;
-    }
+		Cursor.lockState = CursorLockMode.Confined;
+	}
 
-    void Update() {
+	void Update() {
 		xRotation -= Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;
 		yRotation += Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
 
