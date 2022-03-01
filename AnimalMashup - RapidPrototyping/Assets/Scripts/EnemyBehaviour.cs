@@ -20,6 +20,6 @@ public class EnemyBehaviour : MonoBehaviour
     }
 
     private void Move() {
-        transform.position = Vector3.MoveTowards(transform.position.normalized, GameManager.instance.player.transform.position, speed);
+        //move towards player within certain range
     }
 }
