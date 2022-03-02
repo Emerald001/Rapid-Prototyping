@@ -12,6 +12,7 @@ public class Agent : MonoBehaviour
 
     public float TimeToDespawn;
     private float TimeSinceDeath;
+    private float BreakoutTimer;
 
     public bool stopped;
 
@@ -30,7 +31,7 @@ public class Agent : MonoBehaviour
 
     public void OnUpdate() {
         if (stopped){
-
+            return;
         }
 
         if (agent.remainingDistance < .1f) {
@@ -39,6 +40,18 @@ public class Agent : MonoBehaviour
                 pos = AgentManager.RandomNavmeshLocation(this.transform.position, lookAroundRange);
             }
             agent.SetDestination(pos);
+            BreakoutTimer = 0;
+        }
+
+        BreakoutTimer += Time.deltaTime;
+
+        if(BreakoutTimer > 5) {
+            var pos = AgentManager.RandomNavmeshLocation(this.transform.position, lookAroundRange);
+            while (pos == Vector3.zero) {
+                pos = AgentManager.RandomNavmeshLocation(this.transform.position, lookAroundRange);
+            }
+            agent.SetDestination(pos);
+            BreakoutTimer = 0;
         }
     }
 

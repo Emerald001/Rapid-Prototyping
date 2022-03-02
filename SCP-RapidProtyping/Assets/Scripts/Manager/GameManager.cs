@@ -11,11 +11,14 @@ public class GameManager : MonoBehaviour
     }
 
     public AgentManager agentManager;
+    public LookAround lookAround;
+    public ActionStateMachine stateMachine;
     public Parasite parasite;
     public Values values;
-    public Camera camera;
+    public GameObject GotIt;
 
-    private IEnumerator EndGame() {
-        yield return new WaitForSeconds(10f);
+    private void Start() {
+        lookAround.Invoke("EnableCam", 2f);
+        stateMachine.Invoke("OnStart", 2f);
     }
 }

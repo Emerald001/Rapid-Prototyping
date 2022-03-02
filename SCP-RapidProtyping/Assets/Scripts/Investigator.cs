@@ -36,10 +36,6 @@ public class Investigator : Agent
 
                 if (GameManager.instance.parasite.currentHost == DudeToCatch) {
                     GameManager.instance.parasite.CaughtOrKilled();
-
-                    DudeToCatch = null;
-
-                    Debug.Log("Caught the Parasite!");
                 }
             }
         }

@@ -58,19 +58,27 @@ public class Parasite : MonoBehaviour
         timeSinceSwitch = 0;
     }
 
-    private void ChangeMaterial(GameObject host, Color material) {
+    public void ChangeMaterial(GameObject host, Color material) {
          host.GetComponent<Renderer>().material.color = material;
     }
 
     private IEnumerator KillDude(GameObject host) {
         yield return new WaitForSeconds(timeToDie);
 
-        host.GetComponent<NavMeshAgent>().SetDestination(host.transform.position);
-        ChangeMaterial(host, DeadHostMaterial);
-        AgentManager.KillDude(host);
+        if (host != null) {
+            host.GetComponent<NavMeshAgent>().SetDestination(host.transform.position);
+            ChangeMaterial(host, DeadHostMaterial);
+            AgentManager.KillDude(host);
+        }
     }
 
     public void CaughtOrKilled() {
+        StartCoroutine(ParasiteCaught());
         Caught = true;
+    }
+
+    IEnumerator ParasiteCaught() {
+        yield return new WaitForSeconds(2f);
+        GameManager.instance.GotIt.SetActive(true);
     }
 }

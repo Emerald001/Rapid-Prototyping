@@ -7,7 +7,7 @@ public class ActionStateMachine : MonoBehaviour
     public State currentState;
     public GameObject firstState;
 
-    void Start() {
+    public void OnStart() {
         currentState = firstState.GetComponent<State>();
     }
 

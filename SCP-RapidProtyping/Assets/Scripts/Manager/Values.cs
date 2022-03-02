@@ -14,7 +14,8 @@ public class Values : MonoBehaviour
     public float timeSinceLaunch;
 
     void Update() {
-        timeSinceLaunch += Time.deltaTime;
+        if(!GameManager.instance.parasite.Caught)
+            timeSinceLaunch += Time.deltaTime;
 
         tValue.text = Mathf.RoundToInt(timeSinceLaunch).ToString();
         cValue.text = cDeadAmount.ToString();

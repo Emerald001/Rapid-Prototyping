@@ -17,8 +17,6 @@ public class LookAround : MonoBehaviour
 
     private void Start() {
 		Cursor.lockState = CursorLockMode.Locked;
-
-		Invoke("EnableCam", 2f);
 	}
 
 	void Update() {

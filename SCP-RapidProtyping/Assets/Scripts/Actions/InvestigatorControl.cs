@@ -3,8 +3,6 @@ using UnityEngine;
 public class InvestigatorControl : MonoBehaviour, State {
     private AgentManager AgentManager;
 
-    private int currentCase = 0;
-
     private void Start() {
         AgentManager = GameManager.instance.agentManager;
     }

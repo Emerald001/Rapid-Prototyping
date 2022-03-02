@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Missile : MonoBehaviour
 {
+    public GameObject Explosion;
     AgentManager agent;
 
     public float flightSpeed;
@@ -19,7 +20,7 @@ public class Missile : MonoBehaviour
             foreach(Collider dude in tmp) {
                 if (dude.CompareTag("Human")) {
                     if (dude.gameObject == GameManager.instance.parasite.currentHost)
-                        Destroy(GameManager.instance.parasite.gameObject);
+                        GameManager.instance.parasite.CaughtOrKilled();
 
                     if (agent.Crowd.Contains(dude.gameObject)) {
                         agent.Crowd.Remove(dude.gameObject);
@@ -36,6 +37,8 @@ public class Missile : MonoBehaviour
                     Destroy(dude.gameObject);
                 }
             }
+            Instantiate(Explosion, transform.position, Quaternion.identity);
+            Destroy(gameObject);
         }
     }
 }

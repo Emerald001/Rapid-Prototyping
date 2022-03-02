@@ -24,6 +24,7 @@ public class ClickScreen : MonoBehaviour
 				}
 			}
 		}
+		
 		return hit;
 	}
 }
