@@ -13,11 +13,18 @@ public class LookAround : MonoBehaviour
 	private float xRotation = 0f;
 	private float yRotation = 0f;
 
+	private bool camBusy = true;
+
     private void Start() {
-		Cursor.lockState = CursorLockMode.Confined;
+		Cursor.lockState = CursorLockMode.Locked;
+
+		Invoke("EnableCam", 2f);
 	}
 
 	void Update() {
+		if (camBusy)
+			return;
+
 		xRotation -= Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;
 		yRotation += Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
 
@@ -26,4 +33,9 @@ public class LookAround : MonoBehaviour
 
 		transform.localRotation = Quaternion.Euler(xRotation, yRotation, 0f);
 	}
+
+    private void EnableCam() {
+		Cursor.lockState = CursorLockMode.Confined;
+		camBusy = false;
+    }
 }

@@ -14,8 +14,7 @@ public class CameraMovement : MonoBehaviour
     public float maxZ;
     public float minZ;
 
-    void Update()
-    {
+    void Update() {
         var x = -Input.GetAxis("Horizontal") * speed * Time.deltaTime;
         var z = -Input.GetAxis("Vertical") * speed * Time.deltaTime;
         var scrollWheel = Input.mouseScrollDelta.y * scrollSpeed * Time.deltaTime;

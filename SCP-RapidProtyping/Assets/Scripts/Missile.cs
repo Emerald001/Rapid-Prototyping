@@ -25,6 +25,11 @@ public class Missile : MonoBehaviour
                         agent.Crowd.Remove(dude.gameObject);
                         GameManager.instance.values.cDeadAmount++;
                     }
+                    else if (agent.Investigators.Contains(dude.gameObject)) {
+                        agent.Investigators.Remove(dude.gameObject);
+                        GameManager.instance.values.aDeadAmount++;
+                    }
+
                     else if (agent.DeadCrowd.Contains(dude.gameObject)) 
                         agent.DeadCrowd.Remove(dude.gameObject);
 

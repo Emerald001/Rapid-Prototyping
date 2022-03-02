@@ -45,8 +45,8 @@ public class AgentManager : MonoBehaviour
             dude.GetComponent<Agent>().OnUpdate();
         }
 
-        foreach (GameObject dude in DeadCrowd) {
-            dude.GetComponent<Agent>().OnKilledUpdate();
+        for (int i = DeadCrowd.Count - 1; i >= 0; i--) {
+            DeadCrowd[i].GetComponent<Agent>().OnKilledUpdate();
         }
     }
 

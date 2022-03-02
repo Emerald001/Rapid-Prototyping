@@ -131,5 +131,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fb8a0ece44c95948adc661aa7d4a463, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AgentManager: {fileID: 0}
+  lookAroundRange: 0
+  agent: {fileID: 0}
+  TimeToDespawn: 0
   targetPostion: {x: 0, y: 0, z: 0}
   DudeToCatch: {fileID: 0}

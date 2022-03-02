@@ -13,6 +13,8 @@ public class Agent : MonoBehaviour
     public float TimeToDespawn;
     private float TimeSinceDeath;
 
+    public bool stopped;
+
     public void OnStart() {
         AgentManager = GameManager.instance.agentManager;
 
@@ -27,6 +29,10 @@ public class Agent : MonoBehaviour
     }
 
     public void OnUpdate() {
+        if (stopped){
+
+        }
+
         if (agent.remainingDistance < .1f) {
             var pos = AgentManager.RandomNavmeshLocation(this.transform.position, lookAroundRange);
             while (pos == Vector3.zero) {
@@ -43,7 +49,7 @@ public class Agent : MonoBehaviour
             return;
 
         foreach(Collider dude in list) {
-            if(dude.gameObject != this.gameObject && !AgentManager.DeadCrowd.Contains(dude.gameObject) && dude.CompareTag("Human")) {
+            if(dude.gameObject != this.gameObject && AgentManager.Crowd.Contains(dude.gameObject)) {
                 var tmp = dude.gameObject.GetComponent<Agent>();
                 var offset = new Vector3(Random.Range(-.3f, .3f), 0, Random.Range(-.3f, .3f));
                 var dir = -(this.transform.position - tmp.gameObject.transform.position).normalized + offset;

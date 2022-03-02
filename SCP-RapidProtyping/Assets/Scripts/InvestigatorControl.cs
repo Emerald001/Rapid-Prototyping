@@ -1,26 +1,32 @@
 using UnityEngine;
 
-public class InvestigatorControl : State
-{
+public class InvestigatorControl : MonoBehaviour, State {
     private AgentManager AgentManager;
 
-    private int currentCase;
+    private int currentCase = 0;
 
-    new void OnUpdate() {
-        switch (currentCase) {
-            case 0:
-                foreach(GameObject investigator in AgentManager.Investigators) {
-                    var tmp = GetComponentInParent<ClickScreen>().GetPos();
+    private void Start() {
+        AgentManager = GameManager.instance.agentManager;
+    }
 
-                    Debug.Log(tmp);
+    public void OnUpdate() {
+        if (!Input.GetKeyDown(KeyCode.Mouse0))
+            return;
 
-                    if(tmp != Vector3.zero)
-                        investigator.GetComponent<Investigator>().targetPostion = tmp;
+        var tmp = GetComponentInParent<ClickScreen>().GetPos();
+
+        if (tmp.collider.CompareTag("Human")) {
+            foreach (GameObject investigator in AgentManager.Investigators) {
+                investigator.GetComponent<Investigator>().DudeToCatch = tmp.collider.gameObject;
+            }
+        }
+        else {
+            foreach (GameObject investigator in AgentManager.Investigators) {
+                if (tmp.point != Vector3.zero) {
+                    investigator.GetComponent<Investigator>().DudeToCatch = null;
+                    investigator.GetComponent<Investigator>().targetPostion = tmp.point;
                 }
-            break;
-
-            case 1:
-                break;
+            }
         }
     }
 }

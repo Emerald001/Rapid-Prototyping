@@ -17,11 +17,16 @@ public class Parasite : MonoBehaviour
     public float timeToDie;
     public float range;
 
+    public bool Caught;
+
     private void Start() {
         AgentManager = GameManager.instance.agentManager;
     }
 
     private void Update() {
+        if (Caught)
+            return;
+
         if (currentHost == null) {
             currentHost = AgentManager.Crowd[Random.Range(0, AgentManager.Crowd.Count - 1)];
             ChangeMaterial(currentHost, CurrentHostMaterial);
@@ -41,7 +46,7 @@ public class Parasite : MonoBehaviour
             tmp = dudesInRange[Random.Range(0, dudesInRange.Length)].gameObject;
         }
 
-        if (AgentManager.DeadCrowd.Contains(tmp) || tmp == null || tmp == currentHost || !tmp.CompareTag("Human")) 
+        if (!AgentManager.Crowd.Contains(tmp) || tmp == null || tmp == currentHost || !tmp.CompareTag("Human")) 
             return;
 
         previousHost = currentHost;
@@ -63,5 +68,9 @@ public class Parasite : MonoBehaviour
         host.GetComponent<NavMeshAgent>().SetDestination(host.transform.position);
         ChangeMaterial(host, DeadHostMaterial);
         AgentManager.KillDude(host);
+    }
+
+    public void CaughtOrKilled() {
+        Caught = true;
     }
 }

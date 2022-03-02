@@ -13,9 +13,7 @@ public class Values : MonoBehaviour
     public int aDeadAmount;
     public float timeSinceLaunch;
 
-    // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         timeSinceLaunch += Time.deltaTime;
 
         tValue.text = Mathf.RoundToInt(timeSinceLaunch).ToString();

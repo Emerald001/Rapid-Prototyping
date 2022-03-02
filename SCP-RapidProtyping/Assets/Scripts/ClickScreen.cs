@@ -8,7 +8,7 @@ public class ClickScreen : MonoBehaviour
 {
 	public Camera screenCam;
 
-	public Vector3 GetPos() {
+	public RaycastHit GetPos() {
 		RaycastHit hit;
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -20,10 +20,10 @@ public class ClickScreen : MonoBehaviour
 				RaycastHit portalHit;
 
 				if (Physics.Raycast(portalRay, out portalHit)) {
-					return portalHit.point;
+					return portalHit;
 				}
 			}
 		}
-		return Vector3.zero;
+		return hit;
 	}
 }

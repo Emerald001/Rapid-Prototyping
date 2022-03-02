@@ -1,10 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class State : MonoBehaviour
+public interface State
 {
-    public void OnUpdate() {
-
-    }
+    public void OnUpdate();
 }

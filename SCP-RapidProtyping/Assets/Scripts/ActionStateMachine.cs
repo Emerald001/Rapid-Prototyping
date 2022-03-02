@@ -5,20 +5,21 @@ using UnityEngine;
 public class ActionStateMachine : MonoBehaviour
 {
     public State currentState;
+    public GameObject firstState;
 
-    void Start()
-    {
-        
+    void Start() {
+        currentState = firstState.GetComponent<State>();
     }
 
-    void Update()
-    {
+    void Update() {
         if(currentState != null)
             currentState.OnUpdate();
     }
 
-    void ChangeState(State state) {
-        if(currentState != state) {
+    public void EditState(GameObject stateHolder) {
+        var state = stateHolder.GetComponent<State>();
+
+        if (currentState != state) {
             currentState = state;
         }
     }
