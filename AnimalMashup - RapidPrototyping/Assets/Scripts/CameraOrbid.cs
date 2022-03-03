@@ -17,7 +17,6 @@ public class CameraOrbid : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    // Update is called once per frame
     private void LateUpdate() {
         float x = Input.GetAxis("Mouse X");
         float y = -Input.GetAxis("Mouse Y");
