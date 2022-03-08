@@ -27,11 +27,6 @@ public class Parasite : MonoBehaviour
         if (Caught)
             return;
 
-        if (currentHost == null) {
-            currentHost = AgentManager.Crowd[Random.Range(0, AgentManager.Crowd.Count - 1)];
-            ChangeMaterial(currentHost, CurrentHostMaterial);
-        }
-
         if (timeSinceSwitch > timeToSwitch) 
             GetNewHost();
 
@@ -73,12 +68,12 @@ public class Parasite : MonoBehaviour
     }
 
     public void CaughtOrKilled() {
-        StartCoroutine(ParasiteCaught());
         Caught = true;
+        GameManager.instance.EndGame();
     }
 
-    IEnumerator ParasiteCaught() {
-        yield return new WaitForSeconds(2f);
-        GameManager.instance.GotIt.SetActive(true);
+    public void Restart() {
+        Caught = false;
+        currentHost = AgentManager.Crowd[Random.Range(0, AgentManager.Crowd.Count - 1)];
     }
 }

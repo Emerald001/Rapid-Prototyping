@@ -2,16 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AimMissile : MonoBehaviour, State
+public class AimMissile : MonoBehaviour, IState
 {
     public GameObject Missile;
     public GameObject Blinker;
-    public GameObject backPanel;
+    public GameObject BackPanel;
     public GameObject three;
     public GameObject two;
     public GameObject one;
+    public GameObject Target;
 
-    public GameObject light;
+    public new GameObject light;
     
     private AgentManager agent;
 
@@ -19,6 +20,10 @@ public class AimMissile : MonoBehaviour, State
 
     private void Start() {
         agent = GameManager.instance.agentManager;
+    }
+
+    public void OnEnter() {
+        Target.SetActive(true);
     }
 
     public void OnUpdate() {
@@ -33,10 +38,16 @@ public class AimMissile : MonoBehaviour, State
         }
     }
 
+    public void OnExit() {
+        Target.SetActive(false);
+    }
+
     private IEnumerator SpawnMissile(Vector3 tmp) {
         Instantiate(Blinker, tmp, Quaternion.identity);
 
         CanInvoke = false;
+
+        Target.SetActive(false);
 
         light.SetActive(true);
 
@@ -44,7 +55,7 @@ public class AimMissile : MonoBehaviour, State
             dude.GetComponent<Agent>().agent.speed = 1.5f;
         }
 
-        backPanel.SetActive(true);
+        BackPanel.SetActive(true);
         three.SetActive(true);
         yield return new WaitForSeconds(1f);
         three.SetActive(false);
@@ -56,11 +67,15 @@ public class AimMissile : MonoBehaviour, State
         one.SetActive(true);
         yield return new WaitForSeconds(1f);
         one.SetActive(false);
-        backPanel.SetActive(false);
+        BackPanel.SetActive(false);
 
         Instantiate(Missile, tmp + new Vector3(0, 50, 0), Quaternion.identity);
 
         yield return new WaitForSeconds(10f);
-        CanInvoke = true;
+
+        if (!GameManager.instance.parasite.Caught) {
+            Target.SetActive(true);
+            CanInvoke = true;
+        }
     }
 }

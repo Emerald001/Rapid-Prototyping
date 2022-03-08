@@ -12,13 +12,29 @@ public class GameManager : MonoBehaviour
 
     public AgentManager agentManager;
     public LookAround lookAround;
+    public CameraMovement cameraMovement;
     public ActionStateMachine stateMachine;
     public Parasite parasite;
     public Values values;
-    public GameObject GotIt;
 
     private void Start() {
         lookAround.Invoke("EnableCam", 2f);
+        StartGame();
+    }
+
+    public void StartGame() {
+        GetComponent<EndGame>().Restart();
+
         stateMachine.Invoke("OnStart", 2f);
+        agentManager.OnStart();
+        cameraMovement.EnableCam();
+        parasite.Restart();
+        values.Restart();
+    }
+
+    public void EndGame() {
+        cameraMovement.active = false;
+        stateMachine.currentState = null;
+        GetComponent<EndGame>().StartSequence();
     }
 }

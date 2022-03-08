@@ -14,7 +14,12 @@ public class CameraMovement : MonoBehaviour
     public float maxZ;
     public float minZ;
 
+    public bool active;
+
     void Update() {
+        if (!active)
+            return;
+
         var x = -Input.GetAxis("Horizontal") * speed * Time.deltaTime;
         var z = -Input.GetAxis("Vertical") * speed * Time.deltaTime;
         var scrollWheel = Input.mouseScrollDelta.y * scrollSpeed * Time.deltaTime;
@@ -35,5 +40,21 @@ public class CameraMovement : MonoBehaviour
         var newPos = new Vector3(transform.position.x + x, transform.position.y - scrollWheel, transform.position.z + z);
 
         transform.position = newPos;
+    }
+
+    public void EnableCam() {
+        StartCoroutine(Sequence());
+    }
+
+    public IEnumerator Sequence() {
+        for (float i = 0; i < 7; i++) {
+            transform.position = new Vector3(Random.Range(minX, maxX), Random.Range(minZ, maxZ), Random.Range(minY, maxY));
+
+            yield return new WaitForSeconds(.1f + (i/20));
+        }
+
+        transform.position = new Vector3(0, 20, 0);
+
+        active = true;
     }
 }

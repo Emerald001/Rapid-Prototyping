@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class ActionStateMachine : MonoBehaviour
 {
-    public State currentState;
+    public IState currentState;
     public GameObject firstState;
 
     public void OnStart() {
-        currentState = firstState.GetComponent<State>();
+        currentState = firstState.GetComponent<IState>();
     }
 
     void Update() {
@@ -17,10 +17,12 @@ public class ActionStateMachine : MonoBehaviour
     }
 
     public void EditState(GameObject stateHolder) {
-        var state = stateHolder.GetComponent<State>();
+        var state = stateHolder.GetComponent<IState>();
 
         if (currentState != state) {
+            currentState.OnExit();
             currentState = state;
+            currentState.OnEnter();
         }
     }
 }

@@ -1127,6 +1127,25 @@ MonoBehaviour:
   jumpHeight: 300
   rb: {fileID: 1643096377}
   Visuals: {fileID: 1828092025}
+<<<<<<< Updated upstream
+=======
+--- !u!114 &1643096376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1643096373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83023fe4f31954c40b5b91cedae01cf2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camAnchor: {fileID: 378542534}
+  sensitivity: 1000
+  minXLook: -30
+  maxXLook: 40
+>>>>>>> Stashed changes
 --- !u!54 &1643096377
 Rigidbody:
   m_ObjectHideFlags: 0

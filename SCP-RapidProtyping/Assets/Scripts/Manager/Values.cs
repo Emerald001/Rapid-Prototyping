@@ -21,4 +21,10 @@ public class Values : MonoBehaviour
         cValue.text = cDeadAmount.ToString();
         aValue.text = aDeadAmount.ToString();
     }
+
+    public void Restart() {
+        timeSinceLaunch = 0;
+        aDeadAmount = 0;
+        cDeadAmount = 0;
+    }
 }
