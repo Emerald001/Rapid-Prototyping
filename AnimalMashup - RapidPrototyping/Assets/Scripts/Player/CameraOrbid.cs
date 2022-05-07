@@ -15,7 +15,6 @@ public class CameraOrbid : MonoBehaviour
     private float curXRot;
 
     private void Start() {
-        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void LateUpdate() {

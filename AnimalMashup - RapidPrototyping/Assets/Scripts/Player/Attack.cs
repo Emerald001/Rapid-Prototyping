@@ -13,6 +13,8 @@ public class Attack : MonoBehaviour
 
     [SerializeField] private GameObject Visuals;
 
+    [HideInInspector] public PlayerManager owner;
+
     private bool CanDirectAttack = true;
     private bool CanSpinAttack = true;
 
@@ -28,6 +30,8 @@ public class Attack : MonoBehaviour
     private void DirectAttack() {
         if (!CanDirectAttack)
             return;
+        
+        owner.animate.SetTrigger("Attack");
 
         var hitEnemies = Physics.OverlapSphere(transform.position, attackRange);
 
@@ -63,7 +67,9 @@ public class Attack : MonoBehaviour
         if (!CanSpinAttack)
             return;
 
-        var hitEnemies = Physics.OverlapSphere(transform.position, 2f);
+        owner.animate.SetTrigger("SpinAttack");
+
+        var hitEnemies = Physics.OverlapSphere(transform.position, attackRange * 2);
 
         foreach(Collider col in hitEnemies) {
             if (col.GetComponentInParent<IDamageble>() == null || col.CompareTag("Player"))

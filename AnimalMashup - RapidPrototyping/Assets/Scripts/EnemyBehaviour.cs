@@ -7,6 +7,7 @@ public class EnemyBehaviour : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private float damage;
     [SerializeField] private float attackRange;
+    [SerializeField] private float viewRange;
 
     [SerializeField] private Rigidbody rb;
     [SerializeField] private GameObject Visuals;
@@ -22,13 +23,14 @@ public class EnemyBehaviour : MonoBehaviour
     }
 
     void Update() {
-        if (Vector3.Distance(Player.transform.position, transform.position) < attackRange) {
+        if (Vector3.Distance(transform.position, Player.transform.position) < attackRange) {
             Attack();
             return;
         }
 
         if(!health.Stunned)
-            Move();
+            if(Vector3.Distance(transform.position, Player.transform.position) < viewRange)
+                Move();
     }
 
     private void Move() {

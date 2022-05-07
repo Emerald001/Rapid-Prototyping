@@ -2,10 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerHealth : HealthComponent
-{
+public class PlayerHealth : HealthComponent {
+
+    [HideInInspector] public PlayerManager owner;
+    [HideInInspector] public bool Died;
+
     public override void TakeDamage(float damage) {
-        base.TakeDamage(damage);
+        health -= damage;
+
+        if(health < 0) {
+            Died = true;
+        }
 
         EventManager<float>.RaiseEvent(EventType.OnPlayerDamaged, health);
     }
